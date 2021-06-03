@@ -1,5 +1,13 @@
 from flask_restful import Resource, reqparse
 from models.planetmodel import PlanetModel
+import requests
+
+
+class SWApi(Resource):
+    def get(self):
+        r = requests.get('https://swapi.dev/api/planets/')
+        data = r.json()
+        return data
 
 
 class Planets(Resource):
@@ -14,10 +22,18 @@ class Planet(Resource):
     atributos.add_argument('terrain')
 
     def get(self, planet_id):
-        planet = PlanetModel.find_id(planet_id)
-        if planet:
-            return planet.json()
-        return {'message': 'planet not found.'}, 404
+        try:
+            # forçando a dar o ValueError se não conseguir transformar em int
+            int(planet_id)
+            planet = PlanetModel.find_id(planet_id)
+            if planet:
+                return planet.json()
+            return {'message': 'planet not found.'}, 404
+        except ValueError:
+            planet = PlanetModel.find_name(planet_id)
+            if planet:
+                return planet.json()
+            return {'message': 'planet not found.'}, 404
 
     def post(self, planet_id):
         if PlanetModel.find_id(planet_id):

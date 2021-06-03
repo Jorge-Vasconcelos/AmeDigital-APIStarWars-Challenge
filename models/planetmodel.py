@@ -30,6 +30,13 @@ class PlanetModel(DataBase.Model):
             return planet
         return False
 
+    @classmethod
+    def find_name(cls, planet_id):
+        planet = cls.query.filter_by(name=planet_id).first()
+        if planet:
+            return planet
+        return False
+
     def save(self):
         DataBase.session.add(self)
         DataBase.session.commit()
