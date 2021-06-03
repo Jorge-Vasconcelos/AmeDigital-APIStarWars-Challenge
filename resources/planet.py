@@ -21,7 +21,7 @@ class Planet(Resource):
 
     def post(self, planet_id):
         if PlanetModel.find_id(planet_id):
-            return {f"message": "planet id '{planet_id}' already exists."}, 400  # Bad Request
+            return {f"message": f"planet id '{planet_id}' already exists."}, 400  # Bad Request
 
         dados = Planet.atributos.parse_args()
         planet = PlanetModel(planet_id, **dados)
