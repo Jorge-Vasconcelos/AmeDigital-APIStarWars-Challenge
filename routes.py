@@ -15,7 +15,8 @@ def read_planet_swapi():
 def read_planet_all():
     sql = 'select * from planets'
     query_result = DataBase.consult(sql)
-    return {'planeta': [planet for planet in query_result]}
+    json_list = [planet for planet in query_result]
+    return jsonify(json_list)
 
 
 @app.route('/api/planet/<string:id_planet>', methods=['GET'])
