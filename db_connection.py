@@ -28,8 +28,8 @@ class DataBase:
                 conexao.commit()
 
     @classmethod
-    def consult(cls, sql):
+    def consult(cls, sql, args=None):
         with conecta() as conexao:
             with conexao.cursor() as cursor:
-                cursor.execute(sql)
+                cursor.execute(sql, args)
                 return cursor.fetchall()
