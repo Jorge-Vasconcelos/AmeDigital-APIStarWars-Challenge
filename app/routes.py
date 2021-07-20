@@ -1,6 +1,6 @@
 from app import app
 from flask import request, jsonify
-from db_connection import DataBase
+from app.db_connection import DataBase
 import requests
 
 
@@ -21,8 +21,9 @@ def read_planet_all():
 
 @app.route('/api/planet/<string:id_planet>', methods=['GET'])
 def read_planet_id(id_planet):
-    sql = f'select * from planets where id_planet={id_planet}'
-    query_result = DataBase.consult(sql)
+    sql = 'select * from planets where id_planet= %s'
+    arguments = (id_planet,)
+    query_result = DataBase.consult(sql, arguments)
     if query_result == ():
         return {'message': 'planet not found'}, 404
     return jsonify(query_result), 200
@@ -40,8 +41,9 @@ def creat_planet():
 
 @app.route('/api/planet/<string:id_planet>', methods=['PUT'])
 def update_planet(id_planet):
-    sql = f'select * from planets where id_planet={id_planet}'
-    query_result = DataBase.consult(sql)
+    sql = f'select * from planets where id_planet= %s'
+    arguments = (id_planet,)
+    query_result = DataBase.consult(sql, arguments)
     if query_result == ():
         return {'message': 'planet not found'}, 404
     body = request.get_json()
@@ -54,8 +56,9 @@ def update_planet(id_planet):
 
 @app.route('/api/planet/<string:id_planet>', methods=['DELETE'])
 def delete_planet(id_planet):
-    sql = f'select * from planets where id_planet={id_planet}'
-    query_result = DataBase.consult(sql)
+    sql = f'select * from planets where id_planet= %s'
+    arguments = (id_planet,)
+    query_result = DataBase.consult(sql, arguments)
     if query_result == ():
         return {'message': 'planet not found'}, 404
     sql = 'delete from planets where id_planet=%s'
