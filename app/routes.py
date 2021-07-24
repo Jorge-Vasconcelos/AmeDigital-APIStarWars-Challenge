@@ -13,8 +13,58 @@ def read_planet_swapi():
 
 @app.route('/api/planets', methods=['GET'])
 def read_planet_all():
-    sql = 'select * from planets'
-    query_result = DataBase.consult(sql)
+    # Query Params
+    name = request.args.get('name')
+    climate = request.args.get('climate')
+    terrain = request.args.get('terrain')
+
+    # Query Creation
+    arguments = []
+    add_and = False
+    first = True
+
+    sql = 'SELECT * FROM planets '
+
+    # --------NAME--------
+    if name:
+        if first:
+            sql = sql + 'WHERE '
+            first = False
+
+        sql = sql + 'name = %s '
+        arguments.append(name)
+        add_and = True
+
+    # --------CLIMATE--------
+    if climate:
+        if first:
+            sql = sql + 'WHERE '
+            first = False
+        else:
+            add_and = True
+
+        if add_and:
+            sql = sql + 'AND '
+            add_and = True
+        sql = sql + 'climate = %s '
+        arguments.append(climate)
+
+    # --------TERRAIN--------
+    if terrain:
+        if first:
+            sql = sql + 'WHERE '
+            first = False
+        else:
+            add_and = True
+
+        if add_and:
+            sql = sql + 'AND '
+            add_and = True
+        sql = sql + 'terrain = %s '
+        arguments.append(terrain)
+
+    # Executing Query
+    query_result = DataBase.consult(sql, arguments)
     json_list = [planet for planet in query_result]
     return jsonify(json_list)
 
