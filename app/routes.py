@@ -8,7 +8,7 @@ import requests
 def read_planet_swapi():
     r = requests.get('https://swapi.dev/api/planets/')
     data = r.json()
-    return data
+    return data, 200
 
 
 @app.route('/api/planets', methods=['GET'])
@@ -66,7 +66,7 @@ def read_planet_all():
     # Executing Query
     query_result = DataBase.consult(sql, arguments)
     json_list = [planet for planet in query_result]
-    return jsonify(json_list)
+    return jsonify(json_list), 200
 
 
 @app.route('/api/planet/<string:id_planet>', methods=['GET'])
@@ -86,7 +86,7 @@ def creat_planet():
           'VALUES (%s,%s,%s)'
     arguments = (body['name'], body['climate'], body['terrain'])
     DataBase.execute(sql, arguments)
-    return {'message': 'planet created'}, 200
+    return {'message': 'planet created'}, 201
 
 
 @app.route('/api/planet/<string:id_planet>', methods=['PUT'])
