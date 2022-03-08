@@ -5,10 +5,11 @@ from contextlib import contextmanager
 @contextmanager
 def conecta():
     conexao = pymysql.connect(
-        host='127.0.0.1',
+        host='mysql_server',
         user='root',
-        password='',
-        db='starwars',
+        password='123',
+        port=3306,
+        db='testedb',
         charset='utf8mb4',
         cursorclass=pymysql.cursors.DictCursor
     )
