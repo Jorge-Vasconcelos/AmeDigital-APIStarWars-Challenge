@@ -1,7 +1,12 @@
 from app import app
 from flask import request, jsonify
-from app.db_connection import DataBase
+from db_connection import DataBase
 import requests
+
+
+@app.route('/', methods=['GET'])
+def index():
+    return 'I am alive'
 
 
 @app.route('/swapi', methods=['GET'])
