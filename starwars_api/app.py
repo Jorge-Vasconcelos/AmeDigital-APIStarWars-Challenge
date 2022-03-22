@@ -1,22 +1,16 @@
 from flask import Flask, request, jsonify
 from flask_restful import Api, Resource, reqparse
-import requests
 
 from db_connection import DataBase
 
 from routes.index import Index
+from routes.swapi import Swapi
+
 app = Flask(__name__)
 api = Api(app)
 
-
 api.add_resource(Index, '/')
-
-
-@app.route('/swapi', methods=['GET'])
-def read_planet_swapi():
-    r = requests.get('https://swapi.dev/api/planets/')
-    data = r.json()
-    return data, 200
+api.add_resource(Swapi, '/swapi')
 
 
 @app.route('/api/planets', methods=['GET'])
