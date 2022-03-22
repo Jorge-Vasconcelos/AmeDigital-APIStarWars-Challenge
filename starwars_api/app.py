@@ -5,12 +5,14 @@ from db_connection import DataBase
 
 from routes.index import Index
 from routes.swapi import Swapi
+from routes.planets import Planets
 
 app = Flask(__name__)
 api = Api(app)
 
 api.add_resource(Index, '/')
 api.add_resource(Swapi, '/swapi')
+api.add_resource(Planets, '/planets')
 
 
 @app.route('/api/planets', methods=['GET'])
