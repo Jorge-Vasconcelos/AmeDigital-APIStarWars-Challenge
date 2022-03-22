@@ -1,15 +1,15 @@
-from flask import Flask
-# from app import app
-from flask import request, jsonify
-from db_connection import DataBase
+from flask import Flask, request, jsonify
+from flask_restful import Api, Resource, reqparse
 import requests
 
+from db_connection import DataBase
+
+from routes.index import Index
 app = Flask(__name__)
+api = Api(app)
 
 
-@app.route('/', methods=['GET'])
-def index():
-    return 'I am alive'
+api.add_resource(Index, '/')
 
 
 @app.route('/swapi', methods=['GET'])
