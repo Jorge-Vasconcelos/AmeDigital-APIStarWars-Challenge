@@ -1,5 +1,9 @@
+import traceback
+from time import sleep
 import pymysql.cursors
 from contextlib import contextmanager
+
+from starwars_api.models.database import SCHEMA_DDL
 
 
 @contextmanager
@@ -34,3 +38,13 @@ class DataBase:
             with conexao.cursor() as cursor:
                 cursor.execute(sql, args)
                 return cursor.fetchall()
+
+
+def create_database():
+    for _ in range(10):
+        try:
+            DataBase.execute(SCHEMA_DDL)
+            break
+        except:
+            traceback.print_exc()
+            sleep(2)
