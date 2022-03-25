@@ -1,7 +1,7 @@
 from flask import jsonify, make_response
 from flask_restful import Resource, reqparse
 
-from starwars_api.db_connection import DataBase
+from starwars_api.models.db_connection import DataBase
 
 
 class Planet(Resource):

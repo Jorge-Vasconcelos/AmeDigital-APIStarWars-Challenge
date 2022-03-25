@@ -22,7 +22,7 @@ def conecta():
 
 class DataBase:
     @classmethod
-    def execute(cls, sql, args):
+    def execute(cls, sql, args=None):
         with conecta() as conexao:
             with conexao.cursor() as cursor:
                 cursor.execute(sql, args)
