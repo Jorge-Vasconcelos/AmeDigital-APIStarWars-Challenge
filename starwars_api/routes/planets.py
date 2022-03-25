@@ -1,4 +1,4 @@
-from flask import jsonify
+from flask import jsonify, make_response
 from flask_restful import Resource, reqparse
 
 from starwars_api.db_connection import DataBase
@@ -65,4 +65,4 @@ class Planets(Resource):
         # Executing Query
         query_result = DataBase.consult(sql, arguments)
         json_list = [planet for planet in query_result]
-        return jsonify(json_list), 200
+        return make_response(jsonify(json_list), 200)

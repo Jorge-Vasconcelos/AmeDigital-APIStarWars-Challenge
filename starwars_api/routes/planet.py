@@ -1,4 +1,4 @@
-from flask import jsonify
+from flask import jsonify, make_response
 from flask_restful import Resource, reqparse
 
 from starwars_api.db_connection import DataBase
@@ -16,7 +16,7 @@ class Planet(Resource):
         query_result = DataBase.consult(sql, arguments)
         if query_result == ():
             return {'message': 'planet not found'}, 404
-        return jsonify(query_result), 200
+        return make_response(jsonify(query_result), 200)
     
     def post(self, id_planet=None):
         body = Planet.params.parse_args()
