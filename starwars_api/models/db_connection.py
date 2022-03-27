@@ -25,15 +25,15 @@ def conecta():
 
 
 class DataBase:
-    @classmethod
-    def execute(cls, sql, args=None):
+    @staticmethod
+    def execute(sql, args=None):
         with conecta() as conexao:
             with conexao.cursor() as cursor:
                 cursor.execute(sql, args)
                 conexao.commit()
 
-    @classmethod
-    def consult(cls, sql, args=None):
+    @staticmethod
+    def consult(sql, args=None):
         with conecta() as conexao:
             with conexao.cursor() as cursor:
                 cursor.execute(sql, args)
